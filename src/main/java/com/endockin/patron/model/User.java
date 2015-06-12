@@ -1,4 +1,4 @@
-package com.endava.patron.model;
+package com.endockin.patron.model;
 
 public class User {
 	
