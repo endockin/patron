@@ -22,7 +22,7 @@ public class MemoryBlueprintService implements BlueprintService {
     @Override
     public Blueprint find(String id) throws BlueprintServiceException {
         if (!blueprints.containsKey(id)) {
-            throw new BlueprintServiceException("Blueprint with id [" + id + "] does not exist.");
+            throw new BlueprintServiceException("Blueprint with id [" + id + "] does not exist.", BlueprintServiceException.Type.NOT_FOUND);
         }
 
         return blueprints.get(id);
@@ -31,7 +31,7 @@ public class MemoryBlueprintService implements BlueprintService {
     @Override
     public Blueprint save(Blueprint b) throws BlueprintServiceException {
         if (blueprints.containsKey(b.getId())) {
-            throw new BlueprintServiceException("Blueprint with id [" + b.getId() + "] already exists.");
+            throw new BlueprintServiceException("Blueprint with id [" + b.getId() + "] already exists.", BlueprintServiceException.Type.ALREADY_EXISTS);
         }
 
         blueprints.put(b.getId(), b);

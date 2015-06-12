@@ -1,4 +1,6 @@
 .settings/
+.gitignore/
 /target
 /.nb-gradle/
 /build/
+
