@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 @Component
-@WebFilter(urlPatterns = "/api/*")
+@WebFilter(urlPatterns = "/api/*", filterName = "securityFilter")
 public class SecurityFilter implements Filter {
     
     private static final String API_KEY_HEADER = "X-Patron-Api-Key";
@@ -38,7 +38,6 @@ public class SecurityFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         try {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
-            LOG.trace("Accessing [{}]", httpRequest.getRequestURI());
             if (!httpRequest.getRequestURI().startsWith("/api") || httpRequest.getRequestURI().equals("/api/auth/login")) {
                 chain.doFilter(request, response);
                 return;
@@ -49,6 +48,7 @@ public class SecurityFilter implements Filter {
                 throw new AuthenticationServiceException("Header must be present.");
             }
             
+            LOG.trace("Filter processing [{}]", httpRequest.getRequestURI());
             authenticationService.isAuthenticated(apiKey);
             chain.doFilter(request, response);
         } catch (AuthenticationServiceException ex) {
