@@ -1,6 +1,8 @@
 package com.endockin.patron.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 
 public class Blueprint {
 
@@ -15,6 +17,9 @@ public class Blueprint {
 
     @JsonProperty("logo")
     private String logo;
+
+    @JsonIgnore
+    private List<Integer> ports;
 
     public String getId() {
         return id;
@@ -48,9 +53,17 @@ public class Blueprint {
         this.logo = logo;
     }
 
+    public List<Integer> getPorts() {
+        return ports;
+    }
+
+    public void setPorts(List<Integer> ports) {
+        this.ports = ports;
+    }
+
     @Override
     public String toString() {
-        return "Blueprint{" + "name=" + name + ", description=" + description + ", logo=" + logo + '}';
+        return "Blueprint{" + "id=" + id + ", name=" + name + ", description=" + description + ", logo=" + logo + ", ports=" + ports + '}';
     }
 
 }

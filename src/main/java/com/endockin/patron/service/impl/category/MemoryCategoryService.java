@@ -59,14 +59,14 @@ public class MemoryCategoryService implements CategoryService {
         operatingSystems.setName("Operating Systems");
 
         Blueprint ubuntu = new Blueprint();
-        ubuntu.setDescription("Ubuntu Operating System Blueprint");
+        ubuntu.setDescription("Ubuntu is an open source software platform that runs everywhere from the smartphone, the tablet and the PC to the server and the cloud.");
         ubuntu.setId("ubuntu");
         ubuntu.setLogo("https://d207aa93qlcgug.cloudfront.net/1.88.1/img/explore_repos/official_ubuntu-h.png");
         ubuntu.setName("Ubuntu");
         blueprintService.save(ubuntu);
 
         Blueprint debian = new Blueprint();
-        debian.setDescription("Debian Operating System Blueprint");
+        debian.setDescription("Debian is a free operating system (OS) for your computer. An operating system is the set of basic programs and utilities that make your computer run.");
         debian.setId("debian");
         debian.setLogo("http://upload.wikimedia.org/wikipedia/commons/0/04/Debian_logo.png");
         debian.setName("Debian");
@@ -75,36 +75,20 @@ public class MemoryCategoryService implements CategoryService {
         operatingSystems.setBlueprints(new ArrayList<>(Arrays.asList(ubuntu, debian)));
         categories.put(operatingSystems.getId(), operatingSystems);
 
-        /*
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (3, 1, 'Postgres', 'Dummy description', 'http://media.tumblr.com/290f58218f6c7edc49ee60bbaf924156/tumblr_inline_moaefiNoSY1qz4rgp.jpg');
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (5, 3, 'Fedora', 'Dummy description', 'https://www.mysql.com/common/logos/logo-mysql-110x57.png');
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (7, 3, 'CentOS', 'Dummy description', 'https://www.mysql.com/common/logos/logo-mysql-110x57.png');
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (8, 2, 'Django', 'Dummy description', 'http://www.howopensource.com/wp-content/uploads/2011/06/django-logo.jpg');
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (9, 2, 'Tomcat', 'Dummy description', 'http://tomcat.apache.org/images/tomcat.png');
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (10, 2, 'Bamboo server', 'Dummy description', 'https://www.atlassian.com/wac/software/bamboo/productLogo/imageBinary/bamboo_logo_landing.png');
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (11, 2, 'Jetty', 'Dummy description', 'http://www.eclipse.org/jetty/documentation/current/images/jetty-header-logo.png');
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (12, 2, 'Chef-Server', 'Dummy description', 'https://www.mysql.com/common/logos/logo-mysql-110x57.png');
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (13, 2, 'Php MyAdmin', 'Dummy description', 'http://www.h-online.com/imgs/43/1/0/2/0/2/1/2/phpMyAdmin_120-e91e013f6db59496.png');
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (14, 2, 'Websphere Liberty', 'Dummy description', 'http://convensysglobal.com/wp-content/uploads/2014/09/ibm-websphere.jpeg');
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (16, 4, 'Sonar', 'Dummy description', 'http://www.leadtec.fr/images/logos/sonar-logo.png');
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (18, 5, 'Developer', 'Dummy description', 'http://icons.iconarchive.com/icons/aha-soft/free-large-boss/96/Superman-icon.png');
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (19, 5, 'Tester', 'Dummy description', 'http://icons.iconarchive.com/icons/aha-soft/free-large-boss/96/Captain-icon.png');
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (20, 5, 'Manager', 'Dummy description', 'http://icons.iconarchive.com/icons/aha-soft/free-large-boss/96/Manager-icon.png');
-         */
-//DATABASES
+        //DATABASES
         Category databases = new Category();
         databases.setId("db");
         databases.setName("Databases");
 
         Blueprint mysql = new Blueprint();
-        mysql.setDescription("MySQL Database Blueprint");
+        mysql.setDescription("MySQL is the world's second most widely used relational database management system and most widely used open-source RDBMS. ");
         mysql.setId("mysql");
         mysql.setLogo("https://d207aa93qlcgug.cloudfront.net/1.88.1/img/explore_repos/official_mysql.png");
         mysql.setName("MySQL");
         blueprintService.save(mysql);
 
         Blueprint mongo = new Blueprint();
-        mongo.setDescription("mongodb Database Blueprint");
+        mongo.setDescription("MongoDB (from \"humongous\") is an open-source document database, and the leading NoSQL database.");
         mongo.setId("mongo");
         mongo.setLogo("https://d207aa93qlcgug.cloudfront.net/1.88.1/img/explore_repos/official_mongodb.png");
         mongo.setName("MongoDB");
@@ -116,23 +100,32 @@ public class MemoryCategoryService implements CategoryService {
         // TOOLS
         Category tools = new Category();
         tools.setId("tools");
-        databases.setName("Tools");
+        tools.setName("Tools");
 
         Blueprint jenkins = new Blueprint();
-        jenkins.setDescription("Jenkins CI");
+        jenkins.setDescription("Jenkins is an award-winning application that monitors executions of repeated jobs, such as building a software project or jobs run by cron.");
         jenkins.setId("jenkins");
         jenkins.setLogo("http://qvacua.com/media/jenkins-menu-icon.png");
         jenkins.setName("Jenkins");
+        jenkins.setPorts(new ArrayList<>(Arrays.asList(8080)));
         blueprintService.save(jenkins);
 
         Blueprint git = new Blueprint();
-        git.setDescription("Git DVSC");
+        git.setDescription("Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.");
         git.setId("git");
         git.setLogo("https://git-scm.com/images/logo@2x.png");
         git.setName("Git");
         blueprintService.save(git);
 
-        tools.setBlueprints(new ArrayList<>(Arrays.asList(mysql, mongo)));
+        Blueprint httpd = new Blueprint();
+        httpd.setDescription("The Apache HTTP Server Project is an effort to develop and maintain an open-source HTTP server for modern operating systems including UNIX and Windows NT. The goal of this project is to provide a secure, efficient and extensible server that provides HTTP services in sync with the current HTTP standards.");
+        httpd.setId("httpd");
+        httpd.setLogo("http://www.host-resource.com/glossary/apache-http-server.jpg");
+        httpd.setName("Apache HTTP Server");
+        httpd.setPorts(new ArrayList<>(Arrays.asList(80)));
+        blueprintService.save(httpd);
+
+        tools.setBlueprints(new ArrayList<>(Arrays.asList(jenkins, git, httpd)));
         categories.put(tools.getId(), tools);
     }
 }

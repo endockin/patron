@@ -33,7 +33,7 @@ public class MemoryAuthenticationService implements AuthenticationService {
     private static final Logger LOG = LoggerFactory.getLogger(MemoryAuthenticationService.class);
 
     private static final String VALID_USER = "user";
-    private static final String VALID_PASSWORD = "12dea96fec20593566ab75692c9949596833adc9";
+    private static final String VALID_PASSWORD = "user";
     private static final int SESSION_VALIDITY_IN_MINUTES = 60;
 
     private final Map<String, Authentication> keyMap = new ConcurrentHashMap<>();

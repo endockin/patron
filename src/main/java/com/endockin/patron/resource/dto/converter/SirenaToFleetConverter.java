@@ -32,4 +32,16 @@ public class SirenaToFleetConverter {
             return null;
         }
     }
+    
+    public SirenaFleetDto convert(Fleet f){
+        SirenaFleetDto dto = new SirenaFleetDto();
+        dto.setBlueprintName(f.getBlueprint().getName());
+        dto.setCpuPerShip(f.getCpuPerShip());
+        dto.setDiskPerShip(f.getDiskSpace());
+        dto.setMemoryPerShip(f.getMemoryPerShip());
+        dto.setName(f.getName());
+        dto.setNumberOfShips(f.getNumberOfShips());
+        dto.setUrls(f.getUrls());
+        return dto;
+    }
 }
