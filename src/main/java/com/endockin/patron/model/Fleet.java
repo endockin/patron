@@ -1,5 +1,7 @@
 package com.endockin.patron.model;
 
+import java.util.List;
+
 public class Fleet {
 
     private Blueprint blueprint;
@@ -8,6 +10,7 @@ public class Fleet {
     private int memoryPerShip;
     private int cpuPerShip;
     private int diskSpace;
+    private List<String> urls;
 
     public Blueprint getBlueprint() {
         return blueprint;
@@ -57,9 +60,17 @@ public class Fleet {
         this.diskSpace = diskSpace;
     }
 
+    public List<String> getUrls() {
+        return urls;
+    }
+
+    public void setUrls(List<String> urls) {
+        this.urls = urls;
+    }
+
     @Override
     public String toString() {
-        return "Fleet{" + "blueprint=" + blueprint + ", name=" + name + ", numberOfShips=" + numberOfShips + ", memoryPerShip=" + memoryPerShip + ", cpuPerShip=" + cpuPerShip + ", diskSpace=" + diskSpace + '}';
+        return "Fleet{" + "blueprint=" + blueprint + ", name=" + name + ", numberOfShips=" + numberOfShips + ", memoryPerShip=" + memoryPerShip + ", cpuPerShip=" + cpuPerShip + ", diskSpace=" + diskSpace + ", urls=" + urls + '}';
     }
 
 }

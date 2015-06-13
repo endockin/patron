@@ -8,21 +8,22 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FleetCache {
-    
-    private final Map<String,List<String>> cache = new ConcurrentHashMap<>();
-    
-    public synchronized List<String> getAllFleetIdsForUser(String userId){
-        return cache.get(userId);
+
+    private final Map<String, List<String>> cache = new ConcurrentHashMap<>();
+
+    public synchronized List<String> getAllFleetIdsForUser(String userId) {
+        List<String> fleetIds = cache.get(userId);
+        return fleetIds != null ? fleetIds : new ArrayList<>();
     }
-    
-    public synchronized void cacheFleetForUser(String userId, String fleetId){
+
+    public synchronized void cacheFleetForUser(String userId, String fleetId) {
         List<String> fleetListForUser = cache.get(userId);
-        
-        if (fleetListForUser == null){
+
+        if (fleetListForUser == null) {
             fleetListForUser = new ArrayList<>();
             cache.put(userId, fleetListForUser);
         }
-        
+
         fleetListForUser.add(fleetId);
     }
 }

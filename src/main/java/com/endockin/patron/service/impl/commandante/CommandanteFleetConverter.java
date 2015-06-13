@@ -4,6 +4,8 @@ import com.endockin.patron.model.Fleet;
 import com.endockin.patron.resource.dto.CommandanteFleetDto;
 import com.endockin.patron.service.blueprint.BlueprintService;
 import com.endockin.patron.service.blueprint.BlueprintServiceException;
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,12 @@ public class CommandanteFleetConverter {
             f.setMemoryPerShip(dto.getMemory().intValue());
             f.setName(dto.getId());
             f.setNumberOfShips(dto.getInstanceNumber());
+
+            List<String> urls = new ArrayList<>();
+            dto.getShips().stream().forEach((shipDto) -> {
+                urls.add(shipDto.getHost() + ":" + shipDto.getPorts().get(0));
+            });
+            f.setUrls(urls);
 
             return f;
         } catch (BlueprintServiceException ex) {

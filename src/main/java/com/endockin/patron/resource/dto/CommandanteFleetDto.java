@@ -23,6 +23,9 @@ public class CommandanteFleetDto {
     @JsonProperty("ports")
     private List<Integer> ports;
 
+    @JsonProperty("ships")
+    public List<CommandanteShipDto> ships;
+
     public String getId() {
         return id;
     }
@@ -71,9 +74,17 @@ public class CommandanteFleetDto {
         this.ports = ports;
     }
 
+    public List<CommandanteShipDto> getShips() {
+        return ships;
+    }
+
+    public void setShips(List<CommandanteShipDto> ships) {
+        this.ships = ships;
+    }
+
     @Override
     public String toString() {
-        return "CommandanteFleetDto{" + "id=" + id + ", image=" + image + ", instanceNumber=" + instanceNumber + ", cpu=" + cpu + ", memory=" + memory + ", ports=" + ports + '}';
+        return "CommandanteFleetDto{" + "id=" + id + ", image=" + image + ", instanceNumber=" + instanceNumber + ", cpu=" + cpu + ", memory=" + memory + ", ports=" + ports + ", ships=" + ships + '}';
     }
 
 }

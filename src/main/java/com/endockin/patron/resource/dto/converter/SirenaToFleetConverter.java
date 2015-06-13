@@ -41,6 +41,7 @@ public class SirenaToFleetConverter {
         dto.setMemoryPerShip(f.getMemoryPerShip());
         dto.setName(f.getName());
         dto.setNumberOfShips(f.getNumberOfShips());
+        dto.setUrls(f.getUrls());
         return dto;
     }
 }
