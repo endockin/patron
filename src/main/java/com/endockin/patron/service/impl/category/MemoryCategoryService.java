@@ -86,9 +86,7 @@ public class MemoryCategoryService implements CategoryService {
          INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (12, 2, 'Chef-Server', 'Dummy description', 'https://www.mysql.com/common/logos/logo-mysql-110x57.png');
          INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (13, 2, 'Php MyAdmin', 'Dummy description', 'http://www.h-online.com/imgs/43/1/0/2/0/2/1/2/phpMyAdmin_120-e91e013f6db59496.png');
          INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (14, 2, 'Websphere Liberty', 'Dummy description', 'http://convensysglobal.com/wp-content/uploads/2014/09/ibm-websphere.jpeg');
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (15, 4, 'Jenkins', 'Dummy description', 'http://qvacua.com/media/jenkins-menu-icon.png');
          INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (16, 4, 'Sonar', 'Dummy description', 'http://www.leadtec.fr/images/logos/sonar-logo.png');
-         INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (17, 4, 'GIT', 'Dummy description', 'https://git-scm.com/images/logo@2x.png');
          INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (18, 5, 'Developer', 'Dummy description', 'http://icons.iconarchive.com/icons/aha-soft/free-large-boss/96/Superman-icon.png');
          INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (19, 5, 'Tester', 'Dummy description', 'http://icons.iconarchive.com/icons/aha-soft/free-large-boss/96/Captain-icon.png');
          INSERT INTO images (imageid, categoryid, imagename, imagedescription, imageLogo) VALUES (20, 5, 'Manager', 'Dummy description', 'http://icons.iconarchive.com/icons/aha-soft/free-large-boss/96/Manager-icon.png');
@@ -114,5 +112,27 @@ public class MemoryCategoryService implements CategoryService {
 
         databases.setBlueprints(new ArrayList<>(Arrays.asList(mysql, mongo)));
         categories.put(databases.getId(), databases);
+
+        // TOOLS
+        Category tools = new Category();
+        tools.setId("tools");
+        databases.setName("Tools");
+
+        Blueprint jenkins = new Blueprint();
+        jenkins.setDescription("Jenkins CI");
+        jenkins.setId("jenkins");
+        jenkins.setLogo("http://qvacua.com/media/jenkins-menu-icon.png");
+        jenkins.setName("Jenkins");
+        blueprintService.save(jenkins);
+
+        Blueprint git = new Blueprint();
+        git.setDescription("Git DVSC");
+        git.setId("git");
+        git.setLogo("https://git-scm.com/images/logo@2x.png");
+        git.setName("Git");
+        blueprintService.save(git);
+
+        tools.setBlueprints(new ArrayList<>(Arrays.asList(mysql, mongo)));
+        categories.put(tools.getId(), tools);
     }
 }
