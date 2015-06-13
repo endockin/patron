@@ -116,13 +116,14 @@ public class MemoryCategoryService implements CategoryService {
         // TOOLS
         Category tools = new Category();
         tools.setId("tools");
-        databases.setName("Tools");
+        tools.setName("Tools");
 
         Blueprint jenkins = new Blueprint();
         jenkins.setDescription("Jenkins CI");
         jenkins.setId("jenkins");
         jenkins.setLogo("http://qvacua.com/media/jenkins-menu-icon.png");
         jenkins.setName("Jenkins");
+        jenkins.setPorts(new ArrayList<>(Arrays.asList(8080)));
         blueprintService.save(jenkins);
 
         Blueprint git = new Blueprint();
@@ -132,7 +133,7 @@ public class MemoryCategoryService implements CategoryService {
         git.setName("Git");
         blueprintService.save(git);
 
-        tools.setBlueprints(new ArrayList<>(Arrays.asList(mysql, mongo)));
+        tools.setBlueprints(new ArrayList<>(Arrays.asList(jenkins, git)));
         categories.put(tools.getId(), tools);
     }
 }

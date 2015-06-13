@@ -1,6 +1,8 @@
 package com.endockin.patron.resource.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Date;
+import java.util.List;
 
 public class SirenaFleetDto {
 
@@ -21,6 +23,18 @@ public class SirenaFleetDto {
 
     @JsonProperty("diskPerShip")
     private int diskPerShip;
+
+    @JsonProperty("urls")
+    private List<String> urls;
+
+    @JsonProperty("deployed")
+    private boolean deployed;
+
+    @JsonProperty("status")
+    private String status;
+
+    @JsonProperty("statusSince")
+    private Date statusSince;
 
     public String getBlueprintName() {
         return blueprintName;
@@ -70,9 +84,41 @@ public class SirenaFleetDto {
         this.diskPerShip = diskPerShip;
     }
 
+    public List<String> getUrls() {
+        return urls;
+    }
+
+    public void setUrls(List<String> urls) {
+        this.urls = urls;
+    }
+
+    public boolean isDeployed() {
+        return deployed;
+    }
+
+    public void setDeployed(boolean deployed) {
+        this.deployed = deployed;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Date getStatusSince() {
+        return statusSince;
+    }
+
+    public void setStatusSince(Date statusSince) {
+        this.statusSince = statusSince;
+    }
+
     @Override
     public String toString() {
-        return "SirenaFleetDto{" + "blueprintName=" + blueprintName + ", name=" + name + ", numberOfShips=" + numberOfShips + ", memoryPerShip=" + memoryPerShip + ", cpuPerShip=" + cpuPerShip + ", diskPerShip=" + diskPerShip + '}';
+        return "SirenaFleetDto{" + "blueprintName=" + blueprintName + ", name=" + name + ", numberOfShips=" + numberOfShips + ", memoryPerShip=" + memoryPerShip + ", cpuPerShip=" + cpuPerShip + ", diskPerShip=" + diskPerShip + ", urls=" + urls + ", deployed=" + deployed + ", status=" + status + ", statusSince=" + statusSince + '}';
     }
 
 }

@@ -29,7 +29,7 @@ public class CrossOriginRequestServletFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         httpResponse.setHeader("Access-Control-Allow-Origin", "*");
         httpResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-        httpResponse.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accepts");
+        httpResponse.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accepts, X-Patron-Api-Key");
         httpResponse.setHeader("Access-Control-Max-Age", "3600");
         chain.doFilter(request, httpResponse);
     }
