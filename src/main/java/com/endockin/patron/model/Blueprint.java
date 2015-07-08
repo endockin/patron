@@ -1,69 +1,102 @@
 package com.endockin.patron.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@Entity
 public class Blueprint {
 
-    @JsonProperty("id")
-    private String id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JsonIgnore
+  private long id;
 
-    @JsonProperty("name")
-    private String name;
+  @JsonProperty("imageName")
+  private String imageName;
 
-    @JsonProperty("description")
-    private String description;
+  @JsonProperty("name")
+  private String name;
 
-    @JsonProperty("logo")
-    private String logo;
+  @JsonProperty("description")
+  @Column(length = 1024)
+  private String description;
 
-    @JsonIgnore
-    private List<Integer> ports;
+  @JsonProperty("logo")
+  private String logo;
 
-    public String getId() {
-        return id;
+  @JsonIgnore
+  /**
+   * Comma separated list of ports
+   */
+  private String ports;
+
+  public String getImageName() {
+    return this.imageName;
+  }
+
+  public void setImageName(String image) {
+    this.imageName = image;
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getLogo() {
+    return logo;
+  }
+
+  public void setLogo(String logo) {
+    this.logo = logo;
+  }
+
+  public List<String> getPorts() {
+    if (ports != null) {
+      String[] portsArray = ports.split(",");
+      return Arrays.asList(portsArray);
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    return Collections.emptyList();
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setPorts(String ports) {
+    this.ports = ports;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getLogo() {
-        return logo;
-    }
-
-    public void setLogo(String logo) {
-        this.logo = logo;
-    }
-
-    public List<Integer> getPorts() {
-        return ports;
-    }
-
-    public void setPorts(List<Integer> ports) {
-        this.ports = ports;
-    }
-
-    @Override
-    public String toString() {
-        return "Blueprint{" + "id=" + id + ", name=" + name + ", description=" + description + ", logo=" + logo + ", ports=" + ports + '}';
-    }
+  @Override
+  public String toString() {
+    return "Blueprint{" + "id=" + id + ", name=" + name + ", description=" + description
+        + ", logo=" + logo + ", ports=" + ports + '}';
+  }
 
 }

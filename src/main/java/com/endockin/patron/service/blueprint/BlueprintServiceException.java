@@ -4,20 +4,25 @@ import com.endockin.patron.service.PatronServiceException;
 
 public class BlueprintServiceException extends PatronServiceException {
 
-    public enum Type {
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 6157760961883018409L;
 
-        NOT_FOUND, ALREADY_EXISTS, OTHER
-    }
+  public enum Type {
 
-    private final Type type;
+    NOT_FOUND, ALREADY_EXISTS, OTHER
+  }
 
-    public BlueprintServiceException(String message, Type type) {
-        super(message);
-        this.type = type;
-    }
+  private final Type type;
 
-    public Type getType() {
-        return type;
-    }
+  public BlueprintServiceException(String message, Type type) {
+    super(message);
+    this.type = type;
+  }
+
+  public Type getType() {
+    return type;
+  }
 
 }

@@ -10,7 +10,7 @@
 
     <logger name="com.endockin.patron" level="TRACE"/>
     
-    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.springframework" level="INFO"/>
     <logger name="org.apache" level="WARN"/>
     <logger name="org.apache.http" level="DEBUG" />
     

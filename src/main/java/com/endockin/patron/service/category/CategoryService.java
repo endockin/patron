@@ -5,7 +5,9 @@ import java.util.List;
 
 public interface CategoryService {
 
-    List<Category> findAll() throws CategoryServiceException;
+  List<Category> findAll() throws CategoryServiceException;
 
-    Category find(String id) throws CategoryServiceException;
+  Category find(String id) throws CategoryServiceException;
+
+  Category save(Category cat) throws CategoryServiceException;
 }
