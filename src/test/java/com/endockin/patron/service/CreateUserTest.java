@@ -2,6 +2,7 @@ package com.endockin.patron.service;
 
 import javax.transaction.Transactional;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class CreateUserTest {
 
   @Test
   @Rollback(false)
+  @Ignore
   public void createUser() {
     User user = new User();
     user.setEmail("endockin@endava.com");
