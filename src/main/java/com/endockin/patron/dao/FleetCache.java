@@ -10,19 +10,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class FleetCache {
 
-  private final Map<Long, List<String>> cache = new ConcurrentHashMap<>();
+  private final Map<String, List<String>> cache = new ConcurrentHashMap<>();
 
-  public synchronized List<String> getAllFleetIdsForUser(Long userId) {
-    List<String> fleetIds = cache.get(userId);
+  public synchronized List<String> getAllFleetIdsForUser(String userEmail) {
+    List<String> fleetIds = cache.get(userEmail);
     return fleetIds != null ? fleetIds : new ArrayList<>();
   }
 
-  public synchronized void cacheFleetForUser(Long userId, String fleetId) {
-    List<String> fleetListForUser = cache.get(userId);
+  public synchronized void cacheFleetForUser(String userEmail, String fleetId) {
+    List<String> fleetListForUser = cache.get(userEmail);
 
     if (fleetListForUser == null) {
       fleetListForUser = new ArrayList<>();
-      cache.put(userId, fleetListForUser);
+      cache.put(userEmail, fleetListForUser);
     }
 
     fleetListForUser.add(fleetId);

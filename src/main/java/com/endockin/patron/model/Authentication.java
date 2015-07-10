@@ -1,14 +1,26 @@
-package com.endockin.patron.resource.auth;
+package com.endockin.patron.model;
 
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Entity
 public class Authentication {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JsonIgnore
+  private long id;
 
   @JsonProperty("key")
+  @Column(name = "_key")
   private String key;
 
   @JsonProperty("generatedAt")
@@ -21,7 +33,7 @@ public class Authentication {
   private String salt;
 
   @JsonIgnore
-  private long userId;
+  private String userEmail;
 
   public String getKey() {
     return key;
@@ -55,12 +67,16 @@ public class Authentication {
     this.salt = salt;
   }
 
-  public long getUserId() {
-    return userId;
+  public String getUserEmail() {
+    return userEmail;
   }
 
-  public void setUserId(long userId) {
-    this.userId = userId;
+  public void setUserEmail(String userEmail) {
+    this.userEmail = userEmail;
+  }
+
+  public long getId() {
+    return this.id;
   }
 
   @Override
@@ -88,7 +104,7 @@ public class Authentication {
   @Override
   public String toString() {
     return "Authentication{" + "key=" + key + ", generatedAt=" + generatedAt + ", validUntil="
-        + validUntil + ", salt=" + salt + ", userId=" + userId + '}';
+        + validUntil + ", salt=" + salt + ", userEmail=" + userEmail + '}';
   }
 
 }

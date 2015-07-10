@@ -6,4 +6,5 @@ import com.endockin.patron.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
+  User findByEmailAndPassword(String email, String hashedPassword);
 }

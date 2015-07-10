@@ -1,7 +1,7 @@
 package com.endockin.patron.service.auth;
 
+import com.endockin.patron.model.Authentication;
 import com.endockin.patron.model.User;
-import com.endockin.patron.resource.auth.Authentication;
 
 public interface AuthenticationService {
 

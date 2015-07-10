@@ -19,7 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.endockin.patron.resource.auth.Authentication;
+import com.endockin.patron.model.Authentication;
 import com.endockin.patron.service.auth.AuthenticationService;
 import com.endockin.patron.service.auth.AuthenticationServiceException;
 
@@ -29,8 +29,6 @@ public class SecurityFilter implements Filter {
 
   private static final String API_KEY_HEADER = "X-Patron-Api-Key";
   private static final Logger LOG = LoggerFactory.getLogger(SecurityFilter.class);
-
-  private static final boolean securityEnabled = false;
 
   @Autowired
   private AuthenticationService authenticationService;
@@ -45,14 +43,6 @@ public class SecurityFilter implements Filter {
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
-    if (!securityEnabled) {
-      Authentication a = new Authentication();
-      a.setUserId(1L);
-      currentAuthentication = new ThreadLocal<>();
-      currentAuthentication.set(a);
-      chain.doFilter(request, response);
-      return;
-    }
 
     try {
       HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -75,7 +65,7 @@ public class SecurityFilter implements Filter {
       LOG.info("Trying to access protected resource without being authenticated. Cause: {}",
           ex.getMessage());
       HttpServletResponse httpResponse = (HttpServletResponse) response;
-      httpResponse.sendError(HttpStatus.UNAUTHORIZED.value());
+      httpResponse.sendError(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
     } finally {
       if (currentAuthentication != null) {
         currentAuthentication.remove();

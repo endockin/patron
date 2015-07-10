@@ -1,14 +1,8 @@
 package com.endockin.patron.resource;
 
-import com.endockin.patron.dao.FleetCache;
-import com.endockin.patron.filter.SecurityFilter;
-import com.endockin.patron.model.Fleet;
-import com.endockin.patron.resource.dto.converter.SirenaToFleetConverter;
-import com.endockin.patron.resource.dto.SirenaFleetDto;
-import com.endockin.patron.service.commandante.CommandanteService;
-import com.endockin.patron.service.commandante.CommandanteServiceException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.endockin.patron.dao.FleetCache;
+import com.endockin.patron.filter.SecurityFilter;
+import com.endockin.patron.model.Fleet;
+import com.endockin.patron.resource.dto.SirenaFleetDto;
+import com.endockin.patron.resource.dto.converter.SirenaToFleetConverter;
+import com.endockin.patron.service.commandante.CommandanteService;
+import com.endockin.patron.service.commandante.CommandanteServiceException;
 
 @RestController
 @RequestMapping("/api/fleet")
@@ -44,7 +46,7 @@ public class FleetResource {
     try {
       Fleet f = commandanteService.launch(sirenaFleetConverter.convert(fleet));
 
-      cache.cacheFleetForUser(securityFilter.getAuthentication().getUserId(), f.getName());
+      cache.cacheFleetForUser(securityFilter.getAuthentication().getUserEmail(), f.getName());
 
       return new ResponseEntity<>(sirenaFleetConverter.convert(f), HttpStatus.OK);
     } catch (CommandanteServiceException ex) {
@@ -75,7 +77,7 @@ public class FleetResource {
     List<SirenaFleetDto> resultList = new ArrayList<>();
 
     for (String fleetId : cache.getAllFleetIdsForUser(securityFilter.getAuthentication()
-        .getUserId())) {
+        .getUserEmail())) {
       try {
         Fleet f = commandanteService.find(fleetId);
         resultList.add(sirenaFleetConverter.convert(f));
