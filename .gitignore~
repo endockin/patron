@@ -4,7 +4,3 @@
 /.nb-gradle/
 /build/
 .gradle/
-.idea/
-patron.iml
-.project
-.classpath
