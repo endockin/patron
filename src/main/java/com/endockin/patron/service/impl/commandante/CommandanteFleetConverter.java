@@ -22,6 +22,8 @@ public class CommandanteFleetConverter {
   private BlueprintService blueprintService;
 
   public CommandanteFleetDto convert(Fleet fleet) {
+    LOG.info("Converting: " + fleet);
+
     CommandanteFleetDto dto = new CommandanteFleetDto();
     dto.setCpu(new Integer(fleet.getCpuPerShip()).doubleValue());
     dto.setId(fleet.getName());

@@ -47,7 +47,8 @@ public class SecurityFilter implements Filter {
     try {
       HttpServletRequest httpRequest = (HttpServletRequest) request;
       if (!httpRequest.getRequestURI().startsWith("/api")
-          || httpRequest.getRequestURI().equals("/api/auth/login")) {
+          || httpRequest.getRequestURI().equals("/api/auth/login")
+          || httpRequest.getMethod().equalsIgnoreCase("OPTIONS")) {
         chain.doFilter(request, response);
         return;
       }
