@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EmbeddedWebContainerConfiguration implements EmbeddedServletContainerCustomizer {
 
-  private static final int PORT = 8080;
+  private static final int PORT = 8082;
 
   @Override
   public void customize(ConfigurableEmbeddedServletContainer container) {
