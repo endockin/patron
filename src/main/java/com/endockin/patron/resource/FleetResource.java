@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.endockin.patron.dao.FleetCache;
 import com.endockin.patron.filter.SecurityFilter;
 import com.endockin.patron.model.Fleet;
+import com.endockin.patron.repository.FleetRepository;
 import com.endockin.patron.resource.dto.SirenaFleetDto;
 import com.endockin.patron.resource.dto.converter.SirenaToFleetConverter;
 import com.endockin.patron.service.commandante.CommandanteService;
@@ -36,7 +36,7 @@ public class FleetResource {
   private SirenaToFleetConverter sirenaFleetConverter;
 
   @Autowired
-  private FleetCache cache;
+  private FleetRepository fleetRepo;
 
   @Autowired
   private SecurityFilter securityFilter;
@@ -46,7 +46,7 @@ public class FleetResource {
     try {
       Fleet f = commandanteService.launch(sirenaFleetConverter.convert(fleet));
 
-      cache.cacheFleetForUser(securityFilter.getAuthentication().getUserEmail(), f.getName());
+      this.fleetRepo.save(f);
 
       return new ResponseEntity<>(sirenaFleetConverter.convert(f), HttpStatus.OK);
     } catch (CommandanteServiceException ex) {
@@ -75,11 +75,11 @@ public class FleetResource {
   @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<SirenaFleetDto>> get() {
     List<SirenaFleetDto> resultList = new ArrayList<>();
+    List<Fleet> fleets = this.fleetRepo.findByUser(securityFilter.getAuthentication().getUser());
 
-    for (String fleetId : cache.getAllFleetIdsForUser(securityFilter.getAuthentication()
-        .getUserEmail())) {
+    for (Fleet fleet : fleets) {
       try {
-        Fleet f = commandanteService.find(fleetId);
+        Fleet f = commandanteService.find(fleet.getName());
         resultList.add(sirenaFleetConverter.convert(f));
       } catch (CommandanteServiceException ex) {
         LOG.warn("Error retrieving fleet.");

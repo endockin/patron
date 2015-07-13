@@ -36,7 +36,7 @@ public class AuthenticationResource {
   }
 
   @RequestMapping(value = "/logout", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<HttpStatus> login(@RequestBody String key) {
+  public ResponseEntity<HttpStatus> logout(@RequestBody String key) {
     try {
       authenticationService.deauthenticate(key);
       return new ResponseEntity<>(HttpStatus.OK);

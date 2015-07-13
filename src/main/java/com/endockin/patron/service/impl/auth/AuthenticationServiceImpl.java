@@ -34,14 +34,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
   @Override
   public Authentication authenticate(User user) throws AuthenticationServiceException {
-    if (!userExists(user)) {
+    User existingUser = userRepo.findByEmailAndPassword(user.getEmail(), user.getPassword());
+    if (existingUser == null) {
       throw new AuthenticationServiceException("Invalid user.");
     }
 
     Authentication authentication = new Authentication();
     authentication.setGeneratedAt(DateTime.now().toDate());
     authentication.setValidUntil(DateTime.now().plusMinutes(SESSION_VALIDITY_IN_MINUTES).toDate());
-    authentication.setUserEmail(user.getEmail());
+    authentication.setUser(existingUser);
     authentication.setSalt(UUID.randomUUID().toString());
     authentication.setKey(this.generateApiKey(authentication));
 
@@ -50,13 +51,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     return authentication;
   }
 
-  private boolean userExists(User user) throws AuthenticationServiceException {
-    return userRepo.findByEmailAndPassword(user.getEmail(), user.getPassword()) != null;
-  }
-
   private String generateApiKey(Authentication a) {
-    String stringToEncrypt = a.getSalt() + FIELD_DELIMITER + a.getUserEmail() + FIELD_DELIMITER
-        + a.getGeneratedAt() + FIELD_DELIMITER + a.getValidUntil();
+    String stringToEncrypt = a.getSalt() + FIELD_DELIMITER + a.getUser().getEmail()
+        + FIELD_DELIMITER + a.getGeneratedAt() + FIELD_DELIMITER + a.getValidUntil();
 
     try {
       MessageDigest digest = MessageDigest.getInstance(DIGEST_ALG);
@@ -87,7 +84,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     if (auth == null) {
       throw new AuthenticationServiceException("API key not in session.");
     }
-    
+
     if (new DateTime(auth.getValidUntil()).isBeforeNow()) {
       throw new AuthenticationServiceException("API key expired! Please re-authenticate");
     }

@@ -1,16 +1,49 @@
 package com.endockin.patron.model;
 
+import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
 public class Fleet {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JsonIgnore
+  private long id;
+
+  @ManyToOne
   private Blueprint blueprint;
   private String name;
   private int numberOfShips;
   private int memoryPerShip;
   private int cpuPerShip;
   private int diskSpace;
-  private List<String> urls;
+
+  @ManyToOne
+  private User user;
+
+  /**
+   * Comma separated list of urls
+   */
+  @Column(length = 1024)
+  private String urls;
+
+  public User getUser() {
+    return this.user;
+  }
+
+  public void setUser(User myUser) {
+    this.user = myUser;
+  }
 
   public Blueprint getBlueprint() {
     return blueprint;
@@ -61,10 +94,10 @@ public class Fleet {
   }
 
   public List<String> getUrls() {
-    return urls;
+    return Arrays.asList(urls.split(","));
   }
 
-  public void setUrls(List<String> urls) {
+  public void setUrls(String urls) {
     this.urls = urls;
   }
 

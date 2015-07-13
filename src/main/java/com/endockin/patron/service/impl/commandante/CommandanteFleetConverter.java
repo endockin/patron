@@ -1,8 +1,5 @@
 package com.endockin.patron.service.impl.commandante;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,44 +13,45 @@ import com.endockin.patron.service.blueprint.BlueprintServiceException;
 @Component
 public class CommandanteFleetConverter {
 
-  private static final Logger LOG = LoggerFactory.getLogger(CommandanteFleetConverter.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(CommandanteFleetConverter.class);
 
-  @Autowired
-  private BlueprintService blueprintService;
+	@Autowired
+	private BlueprintService blueprintService;
 
-  public CommandanteFleetDto convert(Fleet fleet) {
-    LOG.info("Converting: " + fleet);
+	public CommandanteFleetDto convert(Fleet fleet) {
+		LOG.info("Converting: " + fleet);
 
-    CommandanteFleetDto dto = new CommandanteFleetDto();
-    dto.setCpu(new Integer(fleet.getCpuPerShip()).doubleValue());
-    dto.setId(fleet.getName());
-    dto.setImage(fleet.getBlueprint().getImageName());
-    dto.setInstanceNumber(fleet.getNumberOfShips());
-    dto.setMemory(new Integer(fleet.getMemoryPerShip()).doubleValue());
-    dto.setPorts(fleet.getBlueprint().getPorts());
-    return dto;
-  }
+		CommandanteFleetDto dto = new CommandanteFleetDto();
+		dto.setCpu(new Integer(fleet.getCpuPerShip()).doubleValue());
+		dto.setId(fleet.getName());
+		dto.setImage(fleet.getBlueprint().getImageName());
+		dto.setInstanceNumber(fleet.getNumberOfShips());
+		dto.setMemory(new Integer(fleet.getMemoryPerShip()).doubleValue());
+		dto.setPorts(fleet.getBlueprint().getPorts());
+		return dto;
+	}
 
-  public Fleet convert(CommandanteFleetDto dto) {
-    try {
-      Fleet f = new Fleet();
-      f.setBlueprint(blueprintService.find(dto.getImage()));
-      f.setCpuPerShip(dto.getCpu().intValue());
-      f.setMemoryPerShip(dto.getMemory().intValue());
-      f.setName(dto.getId());
-      f.setNumberOfShips(dto.getInstanceNumber());
+	public Fleet convert(CommandanteFleetDto dto) {
+		try {
+			Fleet f = new Fleet();
+			f.setBlueprint(blueprintService.find(dto.getImage()));
+			f.setCpuPerShip(dto.getCpu().intValue());
+			f.setMemoryPerShip(dto.getMemory().intValue());
+			f.setName(dto.getId());
+			f.setNumberOfShips(dto.getInstanceNumber());
 
-      List<String> urls = new ArrayList<>();
-      dto.getShips().stream().forEach((shipDto) -> {
-        urls.add(shipDto.getHost() + ":" + shipDto.getPorts().get(0));
-      });
-      f.setUrls(urls);
+			StringBuilder builder = new StringBuilder();
+			dto.getShips().stream().forEach((shipDto) -> {
+				builder.append(shipDto.getHost() + ":" + shipDto.getPorts().get(0)).append(",");
+			});
+			f.setUrls(builder.substring(0, builder.length()));
 
-      return f;
-    } catch (BlueprintServiceException ex) {
-      LOG.warn("Unknown blueprint [{}]", dto.getImage());
-      return null;
-    }
-  }
+			return f;
+		} catch (BlueprintServiceException ex) {
+			LOG.warn("Unknown blueprint [{}]", dto.getImage());
+			return null;
+		}
+	}
 
 }

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -33,7 +34,8 @@ public class Authentication {
   private String salt;
 
   @JsonIgnore
-  private String userEmail;
+  @ManyToOne
+  private User user;
 
   public String getKey() {
     return key;
@@ -67,12 +69,12 @@ public class Authentication {
     this.salt = salt;
   }
 
-  public String getUserEmail() {
-    return userEmail;
+  public User getUser() {
+    return user;
   }
 
-  public void setUserEmail(String userEmail) {
-    this.userEmail = userEmail;
+  public void setUser(User user) {
+    this.user = user;
   }
 
   public long getId() {
@@ -104,7 +106,7 @@ public class Authentication {
   @Override
   public String toString() {
     return "Authentication{" + "key=" + key + ", generatedAt=" + generatedAt + ", validUntil="
-        + validUntil + ", salt=" + salt + ", userEmail=" + userEmail + '}';
+        + validUntil + ", salt=" + salt + ", user=" + user + '}';
   }
 
 }
