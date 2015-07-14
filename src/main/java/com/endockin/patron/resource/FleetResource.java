@@ -45,6 +45,7 @@ public class FleetResource {
   public ResponseEntity<SirenaFleetDto> post(@RequestBody SirenaFleetDto fleet) {
     try {
       Fleet f = commandanteService.launch(sirenaFleetConverter.convert(fleet));
+      f.setUser(securityFilter.getAuthentication().getUser());
 
       this.fleetRepo.save(f);
 
@@ -76,6 +77,7 @@ public class FleetResource {
   public ResponseEntity<List<SirenaFleetDto>> get() {
     List<SirenaFleetDto> resultList = new ArrayList<>();
     List<Fleet> fleets = this.fleetRepo.findByUser(securityFilter.getAuthentication().getUser());
+    LOG.info("Fleets for user: " + securityFilter.getAuthentication().getUser() + ": " + fleets);
 
     for (Fleet fleet : fleets) {
       try {
@@ -89,5 +91,4 @@ public class FleetResource {
 
     return new ResponseEntity<>(resultList, HttpStatus.OK);
   }
-
 }

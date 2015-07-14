@@ -1,10 +1,12 @@
 package com.endockin.patron.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -12,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.endockin.patron.config.TestConfiguration;
+import com.endockin.patron.model.Fleet;
 import com.endockin.patron.model.User;
 import com.endockin.patron.repository.FleetRepository;
 import com.endockin.patron.repository.UserRepository;
@@ -20,7 +23,8 @@ import com.endockin.patron.repository.UserRepository;
 @ContextConfiguration(classes = TestConfiguration.class)
 @WebAppConfiguration
 @Transactional
-public class CreateUserTest {
+public class FleetTest {
+  private static final Logger LOG = org.slf4j.LoggerFactory.getLogger(FleetTest.class);
 
   @Autowired
   private UserRepository userRepo;
@@ -29,15 +33,17 @@ public class CreateUserTest {
   private FleetRepository fleetRepo;
 
   @Test
-  @Rollback(false)
-  @Ignore
-  public void createUser() {
-    User user = new User();
-    user.setEmail("endockin@endava.com");
-    user.setFirstName("Endockin");
-    user.setLastName("Do");
-    user.setPassword("mycoolP");
+  @Rollback(true)
+  public void getFleet() {
+    User u = new User();
+    u.setEmail("endockin@endava.com");
+    u.setPassword("mycoolP");
+    User newU = userRepo.findByEmailAndPassword(u.getEmail(), u.getPassword());
+    LOG.info("user: " + newU);
 
-    userRepo.save(user);
+    List<Fleet> fleets = fleetRepo.findByUser(newU);
+
+    LOG.info("fleets: " + fleets);
   }
+
 }
