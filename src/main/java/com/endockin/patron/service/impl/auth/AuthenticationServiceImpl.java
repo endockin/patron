@@ -34,7 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
   @Autowired
   private AuthenticationRepository authRepo;
-  
+
   @Autowired
   private LdapRepository ldapRepo;
 
@@ -42,19 +42,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   public Authentication authenticate(User user) throws AuthenticationServiceException {
     User existingUser;
     try {
-        existingUser = ldapRepo.doAuthentication(user.getEmail(), user.getPassword());
+
+      existingUser = ldapRepo.doAuthentication(user.getEmail(), user.getPassword());
+
     } catch (NamingException e) {
-        throw new AuthenticationServiceException("Failed to authenticate in LDAP: " + e.getMessage());
+      throw new AuthenticationServiceException("Failed to authenticate in LDAP: " + e.getMessage());
     }
     if (existingUser == null) {
       throw new AuthenticationServiceException("Invalid user.");
     }
-    //save user in database if it does not exist
+    // save user in database if it does not exist
     User dbUser = userRepo.findByEmail(existingUser.getEmail());
     if (dbUser == null) {
-        dbUser = userRepo.save(existingUser);
-    }    
-    
+      dbUser = userRepo.save(existingUser);
+    }
+
     Authentication authentication = new Authentication();
     authentication.setGeneratedAt(DateTime.now().toDate());
     authentication.setValidUntil(DateTime.now().plusMinutes(SESSION_VALIDITY_IN_MINUTES).toDate());
