@@ -1,18 +1,13 @@
 package com.endockin.patron.model;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import org.apache.tomcat.util.codec.binary.Base64;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class User {
@@ -48,14 +43,7 @@ public class User {
   }
 
   public void setPassword(String password) {
-    MessageDigest digest;
-    try {
-      digest = MessageDigest.getInstance("SHA-256");
-      byte[] digested = digest.digest(password.getBytes());
-      this.password = Base64.encodeBase64String(digested);
-    } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    }
+      this.password = password;
   }
 
   public String getFirstName() {
@@ -84,7 +72,7 @@ public class User {
 
   @Override
   public String toString() {
-    return "User{" + "id=" + id + ", password=" + password + ", firstName=" + firstName
+    return "User{" + "id=" + id + ", firstName=" + firstName
         + ", lastName=" + lastName + ", email=" + email + '}';
   }
 

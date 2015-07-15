@@ -4,6 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
+import javax.naming.NamingException;
+
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +36,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
   @Override
   public Authentication authenticate(User user) throws AuthenticationServiceException {
-    User existingUser = userRepo.findByEmailAndPassword(user.getEmail(), user.getPassword());
+    User existingUser;
+    try {
+        existingUser = LdapHelper.doAuthentication(user.getEmail(), user.getPassword());
+    } catch (NamingException e) {
+        throw new AuthenticationServiceException("Failed to authenticate in LDAP: " + e.getMessage());
+    }
     if (existingUser == null) {
       throw new AuthenticationServiceException("Invalid user.");
     }
-
+    //save user in database if it does not exist
+    User dbUser = userRepo.findByEmail(existingUser.getEmail());
+    if (dbUser == null) {
+        dbUser = userRepo.save(existingUser);
+    }    
+    
     Authentication authentication = new Authentication();
     authentication.setGeneratedAt(DateTime.now().toDate());
     authentication.setValidUntil(DateTime.now().plusMinutes(SESSION_VALIDITY_IN_MINUTES).toDate());
-    authentication.setUser(existingUser);
+    authentication.setUser(dbUser);
     authentication.setSalt(UUID.randomUUID().toString());
     authentication.setKey(this.generateApiKey(authentication));
 

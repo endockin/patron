@@ -38,7 +38,7 @@ public class FleetTest {
     User u = new User();
     u.setEmail("endockin@endava.com");
     u.setPassword("mycoolP");
-    User newU = userRepo.findByEmailAndPassword(u.getEmail(), u.getPassword());
+    User newU = userRepo.findByEmail(u.getEmail());
     LOG.info("user: " + newU);
 
     List<Fleet> fleets = fleetRepo.findByUser(newU);
