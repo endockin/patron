@@ -15,6 +15,7 @@ import org.springframework.util.Base64Utils;
 import com.endockin.patron.model.Authentication;
 import com.endockin.patron.model.User;
 import com.endockin.patron.repository.AuthenticationRepository;
+import com.endockin.patron.repository.LdapRepository;
 import com.endockin.patron.repository.UserRepository;
 import com.endockin.patron.service.auth.AuthenticationService;
 import com.endockin.patron.service.auth.AuthenticationServiceException;
@@ -33,12 +34,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
   @Autowired
   private AuthenticationRepository authRepo;
+  
+  @Autowired
+  private LdapRepository ldapRepo;
 
   @Override
   public Authentication authenticate(User user) throws AuthenticationServiceException {
     User existingUser;
     try {
-        existingUser = LdapHelper.doAuthentication(user.getEmail(), user.getPassword());
+        existingUser = ldapRepo.doAuthentication(user.getEmail(), user.getPassword());
     } catch (NamingException e) {
         throw new AuthenticationServiceException("Failed to authenticate in LDAP: " + e.getMessage());
     }
