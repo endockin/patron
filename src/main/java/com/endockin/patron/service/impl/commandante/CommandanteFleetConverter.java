@@ -44,6 +44,9 @@ public class CommandanteFleetConverter {
 			StringBuilder builder = new StringBuilder();
 			dto.getShips().stream().forEach((shipDto) -> {
 				builder.append(shipDto.getHost() + ":" + shipDto.getPorts().get(0)).append(",");
+				//TODO add ships to fleet object
+				f.setStagedAt(shipDto.getStagedAt());
+				f.setStartedAt(shipDto.getStartedAt());
 			});
 			f.setUrls(builder.substring(0, builder.length()));
 

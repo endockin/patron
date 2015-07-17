@@ -44,6 +44,10 @@ public class SirenaToFleetConverter {
     dto.setName(f.getName());
     dto.setNumberOfShips(f.getNumberOfShips());
     dto.setUrls(f.getUrls());
+    if (f.getStartedAt() != null) {
+        dto.setStatus("Started");
+        dto.setStatusSince(f.getStartedAt());
+    }
     return dto;
   }
 }
