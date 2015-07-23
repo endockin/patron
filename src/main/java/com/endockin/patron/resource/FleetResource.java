@@ -63,6 +63,7 @@ public class FleetResource {
   public ResponseEntity<SirenaFleetDto> get(@PathVariable String id) {
     try {
       Fleet f = commandanteService.find(id);
+      this.fleetRepo.deleteByName("/" + id);
       return new ResponseEntity<>(sirenaFleetConverter.convert(f), HttpStatus.OK);
     } catch (CommandanteServiceException ex) {
       if (CommandanteServiceException.Type.NOT_FOUND.equals(ex.getType())) {

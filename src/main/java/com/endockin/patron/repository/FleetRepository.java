@@ -10,4 +10,6 @@ import com.endockin.patron.model.User;
 public interface FleetRepository extends JpaRepository<Fleet, Long> {
 
   List<Fleet> findByUser(User user);
+  
+  void deleteByName(String name);
 }
