@@ -76,6 +76,7 @@ public class FleetResource {
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> delete(@PathVariable String id) {
     try {
+      LOG.info("Deleting: " + id);
       commandanteService.delete(id);
       this.fleetRepo.deleteByName("/" + id);
       return new ResponseEntity<>(HttpStatus.OK);
