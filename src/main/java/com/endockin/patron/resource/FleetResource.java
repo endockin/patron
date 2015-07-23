@@ -78,7 +78,7 @@ public class FleetResource {
     try {
       LOG.info("Deleting: " + id);
       commandanteService.delete(id);
-      this.fleetRepo.deleteByName("/" + id);
+      this.fleetRepo.removeByName("/" + id);
       return new ResponseEntity<>(HttpStatus.OK);
     } catch (CommandanteServiceException ex) {
       if (CommandanteServiceException.Type.NOT_FOUND.equals(ex.getType())) {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -33,7 +34,15 @@ public class FleetTest {
   private FleetRepository fleetRepo;
 
   @Test
+  @Rollback(false)
+  @Ignore
+  public void deleteFleet() {
+    fleetRepo.removeByName("/jenkins1");
+  }
+
+  @Test
   @Rollback(true)
+  @Ignore
   public void getFleet() {
     User u = new User();
     u.setEmail("endockin@endava.com");
