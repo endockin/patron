@@ -73,6 +73,20 @@ public class FleetResource {
     }
   }
 
+  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> delete(@PathVariable String id) {
+    try {
+      commandanteService.delete(id);
+      return new ResponseEntity<>(HttpStatus.OK);
+    } catch (CommandanteServiceException ex) {
+      if (CommandanteServiceException.Type.NOT_FOUND.equals(ex.getType())) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
   @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<SirenaFleetDto>> get() {
     List<SirenaFleetDto> resultList = new ArrayList<>();

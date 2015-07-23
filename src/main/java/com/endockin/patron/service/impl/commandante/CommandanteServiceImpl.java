@@ -57,6 +57,19 @@ public class CommandanteServiceImpl implements CommandanteService {
     }
   }
 
+  @Override
+  public void delete(String fleetId) throws CommandanteServiceException {
+    try {
+      RestTemplate restTemplate = new RestTemplate();
+      restTemplate.delete(
+          COMMANDANTE_BASE_ADDRESS + Operations.FLEET.getFragment() + "/" + fleetId,
+          CommandanteFleetDto.class);
+    } catch (RestClientException e) {
+      LOG.warn("Fleet not found.", e);
+      handleRestClientException(e);
+    }
+  }
+
   public enum Operations {
 
     FLEET("/api/fleet");
