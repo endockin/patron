@@ -1,15 +1,20 @@
-Install MySQL and run the scripts to populate your database: 
-- DB_SCHEMA.sql 
-- DB_DATA.sql.
-Build the application: mvn clean install
-Deploy the application in Tomcat.
+# Patron
+[![Build Status](https://snap-ci.com/endockin/patron/branch/master/build_image)](https://snap-ci.com/endockin/patron/branch/master)
 
-Login service:
-Use utils/testLogin.html to test the login service
+You can check the available REST services: localhost:8082/swagger-ui.html
 
-Show all categories service:
-http://172.16.116.209:8080/patron/service/category/all?callback=test
+## Requirements
 
-Where:
-- IP of the machine where Tomcat is installed
-- 8080 Tomcat port
+- [Java SE](http://www.oracle.com/technetwork/java/javase/overview)
+- [Gradle](http://www.gradle.org)
+- [MySQL] (https://www.mysql.org)
+
+## Initial setup
+- Create a schema MySQL schema named *patron*
+- Change application.properties (both test and main) with the correct details to connect to the MySQL instance
+- Run PopulateDBTest
+
+
+---
+
+Copyright &copy; 2015 Armada.
